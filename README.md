@@ -1,11 +1,13 @@
 # 🚨 Wireless E-Stop
 
-A reliable **wireless emergency stop system** using nRF24L01+ modules and Arduino-compatible microcontrollers developed by the Inria Paris Robotics Lab.   
+A reliable **wireless emergency stop system** using nRF24L01+ modules and Arduino-compatible microcontrollers, developed by the *Inria Paris Robotics Lab*.  
 This system is designed for robots, machines, or any setup that needs a secure and fast wireless emergency stop.
 
----
-
 ## Project Overview
+
+<table>
+<tr>
+<td>
 
 This project implements a **wireless safety system** with the following key features:
 
@@ -13,8 +15,13 @@ This project implements a **wireless safety system** with the following key feat
 - Configurable RF channel to avoid interferences
 - "Leaky bucket" timeout algorithm to detect signal loss
 - Compact payload for fast transmission
+</td>
+<td align="right">
+<img src="images/button.png" alt="Wireless E-Stop Render" width="400"/>
+</td>
+</tr>
+</table>
 
----
 
 ## Hardware Requirements
 
@@ -26,7 +33,6 @@ This project implements a **wireless safety system** with the following key feat
 - 10x M3 screws (for case assembly)
 - 3D [printed cases](./hardware/CAD)
 
----
 
 ## Pin Connections
 
@@ -42,8 +48,6 @@ This project implements a **wireless safety system** with the following key feat
 | **D12**        | nRF24L01 SPI (MISO)              | nRF24L01 SPI (MISO)                      |
 | **D13**        | nRF24L01 SPI (SCK)               | nRF24L01 SPI (SCK)                       |
 
-
----
 
 ## Software Overview
 
@@ -62,8 +66,6 @@ This project implements a **wireless safety system** with the following key feat
   - No messages received for a set period
 - Requires a **3-second button press** to rearm system
 
----
-
 ## RF Channel Configuration
 
 Both transmitter and receiver support **on-boot channel setup**:
@@ -75,17 +77,12 @@ Both transmitter and receiver support **on-boot channel setup**:
 
 > Tip: Use a **high channel number** (>100) to avoid interference with WiFi.
 
-
----
-
 ## Dependencies
 
 Install via Arduino Library Manager:
 
 - [`RF24`](https://github.com/nRF24/RF24)
 - `EEPROM` and `SPI` (built-in)
-
----
 
 ## Hardware Files
 
