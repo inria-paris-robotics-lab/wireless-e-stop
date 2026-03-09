@@ -1,0 +1,24 @@
+# =========================
+# FreeCAD
+# =========================
+
+*.FCStd1
+*.FCStd~
+*.bak
+*.tmp
+*.autosave
+
+
+*.FCStd.zip
+
+# =========================
+# Arduino
+# =========================
+
+*.elf
+*.bin
+*.eep
+build/
+build-*/
+*.arduino.avr.*
+.sketch/

@@ -120,6 +120,7 @@ void loop() {
         relay_state = HIGH;
         digitalWrite(RELAY_PIN, relay_state); // open the circuit
         state = 1; // Change state to secured
+        Serial.println("Alarm triggered!");
       } else {
         // System is already secured do nothing
       }
@@ -136,6 +137,8 @@ void loop() {
         relay_state = HIGH;
         digitalWrite(RELAY_PIN, relay_state); // Activate relay
         state = 1;
+        Serial.println("Alarm triggered due to signal loss!");
+
       }
     }
   }
