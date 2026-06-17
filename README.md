@@ -1,6 +1,6 @@
 # 🚨 Wireless E-Stop
 
-A reliable **wireless emergency stop system** using nRF24L01+ modules and Arduino-compatible microcontrollers, developed by the *Inria Paris Robotics Lab*.  
+A reliable **wireless emergency stop system** using nRF24L01+ modules and Arduino-compatible microcontrollers, developed by the *Inria Paris Robotics Lab*.
 This system is designed for robots, machines, or any setup that needs a secure and fast wireless emergency stop.
 
 ## Project Overview
@@ -90,7 +90,5 @@ CAD and electronic schematics are located in the [`hardware/`](./hardware) folde
 
 Contents may include:
 
-- Electronic schematics 
+- Electronic schematics
 - 3D printable case FreeCAD files and STL exports
-
-
