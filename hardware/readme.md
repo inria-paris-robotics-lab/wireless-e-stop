@@ -2,9 +2,9 @@
 
 Below are screenshots of Amazon listings for each hardware component used in this project. This ensures reference information is retained even if product links change or are deleted.
 
-## 1. nRF24L01+
+## 1. Arduino Nano nRF24L01+
 
-<img src="./../images/nRF24L01.png" alt="Amazon Screenshot - nRF24L01+" width="300"/>
+<img src="./../images/NANO-nRF24L01.png" alt="Amazon Screenshot - nRF24L01+" width="300"/>
 
 ## 2. Relay module
 
@@ -16,3 +16,7 @@ Below are screenshots of Amazon listings for each hardware component used in thi
 
 ## 4. Reset button
 <img src="./../images/button_reset.png" alt="Amazon Screenshot - Reset button" width="300"/>
+
+
+## 5. Signal LED
+<img src="./../images/ws2812B.png" alt="Amazon Screenshot - Reset button" width="300"/>
