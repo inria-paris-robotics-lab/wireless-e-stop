@@ -58,5 +58,6 @@ We use a female 5.5 x 2.1mm Power Jack connector plugged to a male connector of 
 <div align="center">
 <img src="images/G1/7.jpg" alt="Localisation of the 4 screws to remove marked in red" width="600"/>
 </div>
-<br>
-The "backpack" can be found in our CAD-parts repository [HERE](https://github.com/inria-paris-robotics-lab/CAD-parts/)
+<br>   
+
+The "backpack" can be found in our [CAD-parts repository](https://github.com/inria-paris-robotics-lab/CAD-parts/).
