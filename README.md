@@ -96,3 +96,6 @@ Contents may include:
 
 - Electronic schematics
 - 3D printable case FreeCAD files and STL exports
+
+## Additional tutorials for specific robots
+Some robots like Unitree do not have external emergency connectors and require additional work to implement the e-stop. You can find tutorials for certains robots in the [robot-specific-tutorials](/robot-specific-tutorials/) folder.
