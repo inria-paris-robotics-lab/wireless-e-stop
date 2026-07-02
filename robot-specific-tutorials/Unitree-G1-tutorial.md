@@ -1,5 +1,8 @@
 Wiring tutorial on Unitree G1
 ===
+> [!IMPORTANT]
+> Remove the battery from the robot before opening it.
+
 Lay the robot on its front so that you can access the screws in the back.   
 Unscrew the two screws of the handle.   
 
