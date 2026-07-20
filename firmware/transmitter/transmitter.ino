@@ -3,9 +3,9 @@
 #include <SPI.h>
 #include <nRF24L01.h>
 
-#define CE_PIN 9
-#define CSN_PIN 10
-#define BUTTON_PIN 2
+#define CE_PIN 10
+#define CSN_PIN 9
+#define BUTTON_PIN 3
 
 int EEPROM_ADDRESS = 0; // Address to store the channel
 int ChannelNumber = 0;  // Variable to hold the channel number

@@ -47,7 +47,7 @@ void setLed(uint8_t r, uint8_t g, uint8_t b) {
 void setup() {
   pinMode(RESET_BUTTON_PIN, INPUT_PULLUP);
   pinMode(RELAY_PIN, OUTPUT);
-  digitalWrite(RELAY_PIN, relay_state); // Ensure relay is inactive at start
+  digitalWrite(RELAY_PIN, relay_state); // Ensure relay is active at start
   // setup led
   led.begin();
   led.setBrightness(50); // 0-255
@@ -59,6 +59,7 @@ void setup() {
   }
   // Check Startup mode
   if (digitalRead(RESET_BUTTON_PIN) == LOW) {
+    digitalWrite(RELAY_PIN, LOW); // Ensure relay is inactive during setup
     Serial.begin(115200);
     setLed(255, 255, 0);
     while (!Serial) {
@@ -87,7 +88,8 @@ void setup() {
     while (digitalRead(RESET_BUTTON_PIN) == LOW) {
       delay(100);
     }
-    Serial.end(); // End serial communication to save power
+    Serial.end();                  // End serial communication to save power
+    digitalWrite(RELAY_PIN, HIGH); // Ensure relay is active before starting
   }
 
   // Initialize nRF24L01
