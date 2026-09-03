@@ -25,32 +25,25 @@ This project implements a **wireless safety system** with the following key feat
 
 ## Hardware Requirements
 
-### Bill of Materials (BOM) for 1 Pair
-
-| Qty | Item | Unit Cost (€) | Notes |
-|------|------|------:|------|
-| 2 | [Arduino Nano + nRF24L01+ RF module](https://fr.aliexpress.com/item/1005006939062836.html) | 2.00 | One for transmitter, one for receiver |
-| 1 | [Relay module](https://www.amazon.fr/gp/product/B08CDQ6CF8/) | 7.00 | 3.3V or 5V, matching MCU logic level |
-| 1 | [Emergency stop button](https://www.amazon.fr/gp/product/B08ZS8HZYV/) | 14.00 | Main emergency stop |
-| 1 | [Reset button](https://www.amazon.fr/mini-boutons-poussoirs-tactiles-%C3%A9lectroniques-domotiques/dp/B0F5VCJY95/) | 0.10 | Receiver reset button |
-| 1 | [WS2812B LED](https://www.amazon.fr/Tesfish-Adressable-Individuellement-Intelligente-D%C3%A9coration/dp/B0D5B7HDPP/) | 0.10 | Status indication |
-| 10 | M3 screws | - | Case assembly |
-| 1 set | [3D printed cases](./hardware/CAD) | 2.00 | Transmitter + receiver enclosure |
-| **Total** | **27.20 €** |
+- 2x [Arduino-Nano NRF24L01+ microcontrollers](https://fr.aliexpress.com/item/1005006939062836.html)
+- 1x [Relay module]( https://www.amazon.fr/gp/product/B08CDQ6CF8/ref=ox_sc_act_title_1?smid=A21312XZUBAZON&psc=1) (3.3V or 5V just make sure the relay voltage matches your microcontroller logic level)
+- 1x [Emergency stop button](https://www.amazon.fr/gp/product/B08ZS8HZYV/ref=ox_sc_act_title_4?smid=A1DBC97EH2O973&th=1)
+- 1x [Reset button](https://amazon.fr/dp/B0BF51N8CK) (for receiver)
+- 1x [Signal LED (WSG2812B)](https://amazon.fr/dp/B0D5B7HDPP) (for receiver)
+- 20x M3 screws
+- 4x M1.6 screws
+- 3D [printed cases](./hardware/CAD)
 
 ## Pin Connections
 
-| **Arduino Pin**| **Transmitter**                  | **Receiver**                             |
-|----------------|----------------------------------|------------------------------------------|
-| **VCC**        | 3.3V nRF24L01                    | 3.3V nRF24L01 and Relay Module           |
-| **GND**        | GND nRF24L01, E-stop Button      | GND nRF24L01, Relay Module, Reset Button |
-| **D2**         | E-stop Button                    | Reset Button                             |
-| **D5**         | ——————————————                   | Relay IN Pin                             |
-| **D9**         | nRF24L01 CE                      | nRF24L01 CE                              |
-| **D10**        | nRF24L01 CSN                     | nRF24L01 CSN                             |
-| **D11**        | nRF24L01 SPI (MOSI)              | nRF24L01 SPI (MOSI)                      |
-| **D12**        | nRF24L01 SPI (MISO)              | nRF24L01 SPI (MISO)                      |
-| **D13**        | nRF24L01 SPI (SCK)               | nRF24L01 SPI (SCK)                       |
+| **Arduino Pin**| **Transmitter**                    | **Receiver**                               |
+|----------------|------------------------------------|--------------------------------------------|
+| **3.3V**       | ——————————————                     | Relay Module                               |
+| **GND**        | GND, E-stop Button                 | GND, Relay Module, Signal LED, Reset Button|
+| **5.5V**       | ——————————————                     | Signal LED                                 |
+| **D5**         | ——————————————                     | Relay IN Pin                               |
+| **D9**         | used for nRF24L01 CE               | used for nRF24L01 CE                       |
+| **D10**        | used for nRF24L01 CSN              | used fornRF24L01 CSN                       |
 
 
 ## Software Overview
