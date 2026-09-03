@@ -22,8 +22,6 @@ int state = 0; // Internal state 0: armed, 1: secured
 
 int relay_state = HIGH; // Relay state (low = circuit closed, high = circuit open)
 
-// FIX #1: initialisé à false. "true" reçu par radio = signal d'alarme.
-// Tant qu'aucun message n'a été reçu, on ne doit pas considérer qu'il y a alarme.
 bool msg = false; // Alarm message
 
 // Reset button parameters
@@ -47,7 +45,6 @@ void setLed(uint8_t r, uint8_t g, uint8_t b) {
 void setup() {
   pinMode(RESET_BUTTON_PIN, INPUT_PULLUP);
   pinMode(RELAY_PIN, OUTPUT);
-  digitalWrite(RELAY_PIN, relay_state); // Ensure relay is active at start
   // setup led
   led.begin();
   led.setBrightness(50); // 0-255
@@ -66,6 +63,8 @@ void setup() {
       // some boards need to wait to ensure access to serial over USB
     }
     Serial.println("Mode Setup");
+    Serial.print("Current Channel set to: ");
+    Serial.println(ChannelNumber);
     Serial.println("Please enter the new Channel (0-125, you should use high values to avoid WiFi "
                    "interference): ");
     while (!Serial.available()) {
@@ -88,8 +87,7 @@ void setup() {
     while (digitalRead(RESET_BUTTON_PIN) == LOW) {
       delay(100);
     }
-    Serial.end();                  // End serial communication to save power
-    digitalWrite(RELAY_PIN, HIGH); // Ensure relay is active before starting
+    Serial.end(); // End serial communication to save power
   }
 
   // Initialize nRF24L01
@@ -113,7 +111,7 @@ void setup() {
   radio.startListening();            // Set the module as receiver
   // Deactive the relay
   relay_state = LOW;
-  digitalWrite(RELAY_PIN, relay_state);
+  digitalWrite(RELAY_PIN, relay_state); // Ensure relay is active at start
 
   lastLeakTime = millis();
 

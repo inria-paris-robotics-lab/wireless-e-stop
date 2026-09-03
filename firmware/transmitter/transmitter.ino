@@ -5,7 +5,7 @@
 
 #define CE_PIN 10
 #define CSN_PIN 9
-#define BUTTON_PIN 3
+#define BUTTON_PIN 2
 
 int EEPROM_ADDRESS = 0; // Address to store the channel
 int ChannelNumber = 0;  // Variable to hold the channel number
@@ -33,6 +33,8 @@ void setup() {
       // some boards need to wait to ensure access to serial over USB
     }
     Serial.println("Mode Setup");
+    Serial.print("Current Channel set to: ");
+    Serial.println(ChannelNumber);
     Serial.println("Please enter the new Channel (0-125, you should use high values to avoid WiFi "
                    "interference): ");
     while (!Serial.available()) {
