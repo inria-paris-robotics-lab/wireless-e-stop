@@ -22,7 +22,7 @@
 int EEPROM_ADDRESS = 0; // Address to store the channel
 int ChannelNumber = 0;  // Variable to hold the channel number
 
-RF24 radio(CE_PIN, CSN_PIN); // Create a RF24 object
+RF24 radio(CE_PIN, CSN_PIN);
 
 const byte address[6] = "1234"; // Address for communication
 
@@ -36,14 +36,14 @@ bool radioOK = false;
 
 const unsigned long RADIO_INIT_TIMEOUT = 5000;
 
-// Reset button parameters (avec debounce logiciel)
+// Reset button parameters
 const unsigned long DEBOUNCE_DELAY = 30;
 unsigned long lastButtonChange = 0;
 bool lastRawButtonState = HIGH;
 bool buttonState = HIGH;
 
-bool buttonPressed = false;                 // Is the button currently pressed
-unsigned long buttonPressTime = 0;          // Time when button was pressed
+bool buttonPressed = false;
+unsigned long buttonPressTime = 0;
 const unsigned long RESET_HOLD_TIME = 3000; // Time in ms to hold button to reset
 
 // Leaky bucket parameters
@@ -52,8 +52,7 @@ int bucketLevel = BUCKET_CAPACITY; // Current bucket level (starts full)
 unsigned long lastLeakTime = 0;    // Last time the bucket leaked
 const long LEAK_INTERVAL = 150;    // Bucket loses 1 point every leak interval (ms)
 
-// Heartbeat LED (etat RUN uniquement) : un blink prouve que loop() tourne
-// toujours, contrairement a un bleu fixe qui pourrait masquer un freeze.
+// Heartbeat LED
 unsigned long lastHeartbeat = 0;
 bool heartbeatOn = false;
 const unsigned long HEARTBEAT_INTERVAL = 500;
@@ -80,7 +79,6 @@ bool readButtonDebounced() {
 void setRelayRun() {
   relay_state = RELAY_RUN;
   digitalWrite(RELAY_PIN, relay_state);
-  // La couleur/pulse est ensuite geree par le heartbeat dans loop().
   heartbeatOn = true;
   lastHeartbeat = millis();
   setLed(0, 0, 255);
@@ -89,12 +87,10 @@ void setRelayRun() {
 void setRelayStop() {
   relay_state = RELAY_STOP;
   digitalWrite(RELAY_PIN, relay_state);
-  setLed(255, 0, 0); // fixe : un etat secure qui clignote preterait a confusion
+  setLed(255, 0, 0);
 }
 
 void setup() {
-  // Watchdog desactive au tout debut au cas ou un reset precedent l'aurait
-  // laisse actif (evite une boucle de reset si le watchdog etait deja arme).
   wdt_disable();
 
   pinMode(RELAY_PIN, OUTPUT);
@@ -102,8 +98,7 @@ void setup() {
 
   // setup led
   led.begin();
-  led.setBrightness(50); // 0-255
-  led.show();
+  led.setBrightness(50);
 
   setRelayStop();
 
@@ -114,17 +109,12 @@ void setup() {
   }
 
   // Check Startup mode
-  // Rappel : ne brancher le PC / ouvrir un moniteur serie que dans ce mode
-  // de setup ou en dev. En usage normal (sans hote USB connecte), garder
-  // Serial.begin() actif ne pose pas de probleme de reset DTR.
   if (digitalRead(RESET_BUTTON_PIN) == LOW) {
-    // Relais deja en STOP par defaut ci-dessus, on le confirme.
+    // Set relay stop to avoid robto working during setup
     setRelayStop();
     Serial.begin(115200);
     setLed(255, 255, 0);
-    while (!Serial) {
-      // some boards need to wait to ensure access to serial over USB
-    }
+
     Serial.println("Mode Setup");
     Serial.print("Current Channel set to: ");
     Serial.println(ChannelNumber);
@@ -137,7 +127,6 @@ void setup() {
     while (!(newChannel >= 0 && newChannel <= 125)) {
       Serial.println("Invalid input. Please enter a valid channel (0-125): ");
       while (!Serial.available()) {
-        // wait for user input
       }
       newChannel = Serial.parseInt();
     }
@@ -151,13 +140,10 @@ void setup() {
     while (digitalRead(RESET_BUTTON_PIN) == LOW) {
       delay(100);
     }
-    Serial.end(); // End serial communication to save power
+    Serial.end();
   }
 
-  // Initialize nRF24L01 avec timeout borne.
-  // Si la radio ne repond pas dans le temps imparti, on ne reste pas
-  // bloque indefiniment : on sort et on securise explicitement le systeme
-  // plus bas (radioOK restera false).
+  // Initialize nRF24L01
   unsigned long radioInitStart = millis();
   bool blink = false;
   while (!radioOK && (millis() - radioInitStart < RADIO_INIT_TIMEOUT)) {
@@ -179,39 +165,27 @@ void setup() {
     radio.setDataRate(RF24_1MBPS);     // Set data rate
     radio.openReadingPipe(1, address); // Set the address for communication
     radio.startListening();            // Set the module as receiver
-
-    // Radio confirmee OK : on autorise le robot.
     state = 0;
     setRelayRun();
   } else {
-    // Timeout atteint sans radio fonctionnelle : on ne bouge pas de STOP,
-    // on passe directement en etat securise.
     state = 1;
     setRelayStop();
   }
 
   lastLeakTime = millis();
 
-  // Watchdog arme en tout dernier, une fois l'init terminee. Si loop() ne
-  // revient jamais (hang materiel/logiciel), la carte reset au bout d'1s :
-  // le relais repasse par setup() -> STOP par defaut -> radio revalidee
-  // avant toute reautorisation du robot.
   wdt_enable(WDTO_1S);
 }
 
 void loop() {
-  wdt_reset(); // preuve que loop() tourne toujours, en tout premier
+  wdt_reset();
 
   uint8_t pipe;
 
-  // Si la radio n'a jamais pu s'initialiser, on reste bloque en securise.
-  // Le bouton reset ne doit pas pouvoir reactiver le robot sans radio OK.
   if (!radioOK) {
     return;
   }
 
-  // Heartbeat visuel : ne clignote que quand le systeme est arme (RUN),
-  // pour distinguer un fonctionnement normal d'un freeze silencieux.
   if (state == 0 && millis() - lastHeartbeat > HEARTBEAT_INTERVAL) {
     lastHeartbeat = millis();
     heartbeatOn = !heartbeatOn;

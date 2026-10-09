@@ -29,9 +29,6 @@ void setup() {
   // Check Startup mode
   if (digitalRead(BUTTON_PIN) == HIGH) {
     Serial.begin(115200);
-    while (!Serial) {
-      // some boards need to wait to ensure access to serial over USB
-    }
     Serial.println("Mode Setup");
     Serial.print("Current Channel set to: ");
     Serial.println(ChannelNumber);
