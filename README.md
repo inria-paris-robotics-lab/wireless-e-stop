@@ -38,12 +38,14 @@ This project implements a **wireless safety system** with the following key feat
 
 | **Arduino Pin**| **Transmitter**                    | **Receiver**                               |
 |----------------|------------------------------------|--------------------------------------------|
-| **3.3V**       | ——————————————                     | Relay Module                               |
+| **3.3V**       | ——————————————                     | Relay Module VCC                           |
+| **5V**         | ——————————————                     | Signal LED VCC                             |
 | **GND**        | GND, E-stop Button                 | GND, Relay Module, Signal LED, Reset Button|
-| **5.5V**       | ——————————————                     | Signal LED                                 |
+| **D2**         | E-stop Button (NC, internal pull-up)| Signal LED DIN (WS2812B)                  |
+| **D3**         | ——————————————                     | Reset Button (internal pull-up)            |
 | **D5**         | ——————————————                     | Relay IN Pin                               |
-| **D9**         | used for nRF24L01 CE               | used for nRF24L01 CE                       |
-| **D10**        | used for nRF24L01 CSN              | used fornRF24L01 CSN                       |
+| **D9**         | used for nRF24L01 CSN              | used for nRF24L01 CSN                      |
+| **D10**        | used for nRF24L01 CE               | used for nRF24L01 CE                       |
 
 
 ## Software Overview
@@ -78,8 +80,9 @@ Both transmitter and receiver support **on-boot channel setup**:
 
 Install via Arduino Library Manager:
 
-- [`RF24`](https://github.com/nRF24/RF24)
-- `EEPROM` and `SPI` (built-in)
+- [`RF24`](https://github.com/nRF24/RF24) (transmitter and receiver)
+- [`Adafruit NeoPixel`](https://github.com/adafruit/Adafruit_NeoPixel) (receiver only, for the signal LED)
+- `EEPROM`, `SPI` and `avr/wdt` (built-in)
 
 ## Hardware Files
 
